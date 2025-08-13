@@ -12,6 +12,7 @@ import { Badge } from "./Badge";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 import { isMobile } from "@/lib/utils";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(isMobile() ? false : true);
@@ -25,10 +26,13 @@ export const Sidebar = () => {
             animate={{ x: 0 }}
             transition={{ duration: 0.2, ease: "linear" }}
             exit={{ x: -200 }}
-            className="px-6  z-[100] py-10 bg-neutral-100 max-w-[14rem] lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
+            className="px-6 z-[100] py-10 bg-neutral-100 dark:bg-neutral-800 max-w-[14rem] lg:w-fit fixed lg:relative h-screen left-0 flex flex-col justify-between border-r border-neutral-200 dark:border-neutral-700"
           >
             <div className="flex-1 overflow-auto">
               <SidebarHeader />
+              <div className="my-6">
+                <ThemeToggle />
+              </div>
               <Navigation setOpen={setOpen} />
             </div>
             <div onClick={() => isMobile() && setOpen(false)}>
@@ -38,10 +42,10 @@ export const Sidebar = () => {
         )}
       </AnimatePresence>
       <button
-        className="fixed lg:hidden bottom-4 right-4 h-8 w-8 border border-neutral-200 rounded-full backdrop-blur-sm flex items-center justify-center z-50"
+        className="fixed lg:hidden bottom-4 right-4 h-8 w-8 border border-neutral-200 dark:border-neutral-600 rounded-full backdrop-blur-sm flex items-center justify-center z-50 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors duration-200"
         onClick={() => setOpen(!open)}
       >
-        <IconLayoutSidebarRightCollapse className="h-4 w-4 text-secondary" />
+        <IconLayoutSidebarRightCollapse className="h-4 w-4 text-secondary dark:text-neutral-300" />
       </button>
     </>
   );
@@ -64,8 +68,8 @@ export const Navigation = ({
           href={link.href}
           onClick={() => isMobile() && setOpen(false)}
           className={twMerge(
-            "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
-            isActive(link.href) && "bg-white shadow-lg text-primary"
+            "text-secondary hover:text-primary dark:text-neutral-300 dark:hover:text-white transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
+            isActive(link.href) && "bg-white dark:bg-neutral-700 shadow-lg text-primary dark:text-white"
           )}
         >
           <link.icon
@@ -78,7 +82,7 @@ export const Navigation = ({
         </Link>
       ))}
 
-      <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
+      <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2 text-neutral-600 dark:text-neutral-300">
         Socials
       </Heading>
       {socials.map((link: Navlink) => (
@@ -86,7 +90,7 @@ export const Navigation = ({
           key={link.href}
           href={link.href}
           className={twMerge(
-            "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm"
+            "text-secondary hover:text-primary dark:text-neutral-300 dark:hover:text-white transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm"
           )}
         >
           <link.icon
@@ -113,8 +117,8 @@ const SidebarHeader = () => {
         className="object-cover object-top rounded-full flex-shrink-0"
       />
       <div className="flex text-sm flex-col">
-        <p className="font-bold text-primary">Parth Tuteja</p>
-        <p className="font-light text-secondary">Developer</p>
+        <p className="font-bold text-primary dark:text-white">Parth Tuteja</p>
+        <p className="font-light text-secondary dark:text-neutral-300">Developer</p>
       </div>
     </div>
   );

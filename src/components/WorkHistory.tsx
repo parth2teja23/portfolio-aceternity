@@ -17,18 +17,18 @@ export const WorkHistory = () => {
           className="flex md:flex-row flex-col space-y-10 md:space-y-0 space-x-10 my-20 relative"
           key={`timeline-${index}`}
         >
-          <Paragraph className="w-40">{item.date}</Paragraph>
+          <Paragraph className="w-40 text-neutral-600 dark:text-neutral-200">{item.date}</Paragraph>
           <div>
             <Heading
               as="h5"
-              className="text-lg md:text-lg lg:text-lg text-emerald-500"
+              className="text-lg md:text-lg lg:text-lg text-emerald-500 dark:text-emerald-400"
             >
               {item.company}
             </Heading>
-            <Paragraph className="text-base md:text-base lg:text-base font-semibold">
+            <Paragraph className="text-base md:text-base lg:text-base font-semibold text-neutral-700 dark:text-white">
               {item.title}
             </Paragraph>
-            <Paragraph className="text-sm md:text-sm lg:text-sm mb-4">
+            <Paragraph className="text-sm md:text-sm lg:text-sm mb-4 text-neutral-600 dark:text-neutral-200">
               {item.description}
             </Paragraph>
 
@@ -45,8 +45,8 @@ export const WorkHistory = () => {
 const Step = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex space-x-1 items-start my-2">
-      <IconCircleCheckFilled className="h-3 w-4 mt-1 text-neutral-300" />
-      <Paragraph className="text-sm md:text-sm lg:text-sm">
+      <IconCircleCheckFilled className="h-3 w-4 mt-1 text-neutral-300 dark:text-neutral-400" />
+      <Paragraph className="text-sm md:text-sm lg:text-sm text-neutral-600 dark:text-neutral-200">
         {children}
       </Paragraph>
     </div>

@@ -4,6 +4,7 @@ const {
 } = require("tailwindcss/lib/util/flattenColorPalette");
 
 const config: Config = {
+  darkMode: "class", // Enable dark mode via .dark class
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,6 +21,11 @@ const config: Config = {
       colors: {
         primary: "var(--neutral-700)",
         secondary: "var(--neutral-500)",
+        // Optional: add dark mode colors
+        dark: {
+          primary: "var(--neutral-100)",
+          secondary: "var(--neutral-300)",
+        },
       },
     },
   },

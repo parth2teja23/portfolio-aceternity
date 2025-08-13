@@ -29,7 +29,7 @@ export const Contact = () => {
         <input
           type="text"
           placeholder="Your Name"
-          className="bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 px-2 py-2 rounded-md text-sm text-neutral-700 w-full"
+          className="bg-neutral-100 dark:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:focus:ring-neutral-600 px-2 py-2 rounded-md text-sm text-neutral-700 dark:text-neutral-200 w-full border border-neutral-200 dark:border-neutral-700 transition-colors duration-200 placeholder-neutral-500 dark:placeholder-neutral-400"
           value={formData.name.value}
           onChange={(e) => {
             setFormData({
@@ -44,7 +44,7 @@ export const Contact = () => {
         <input
           type="email"
           placeholder="Your email address"
-          className="bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 px-2 py-2 rounded-md text-sm text-neutral-700 w-full"
+          className="bg-neutral-100 dark:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:focus:ring-neutral-600 px-2 py-2 rounded-md text-sm text-neutral-700 dark:text-neutral-200 w-full border border-neutral-200 dark:border-neutral-700 transition-colors duration-200 placeholder-neutral-500 dark:placeholder-neutral-400"
           value={formData.email.value}
           onChange={(e) => {
             setFormData({
@@ -61,7 +61,7 @@ export const Contact = () => {
         <textarea
           placeholder="Your Message"
           rows={10}
-          className="bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 px-2 mt-4 py-2 rounded-md text-sm text-neutral-700 w-full"
+          className="bg-neutral-100 dark:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:focus:ring-neutral-600 px-2 mt-4 py-2 rounded-md text-sm text-neutral-700 dark:text-neutral-200 w-full border border-neutral-200 dark:border-neutral-700 transition-colors duration-200 placeholder-neutral-500 dark:placeholder-neutral-400"
           value={formData.message.value}
           onChange={(e) => {
             setFormData({
@@ -75,7 +75,7 @@ export const Contact = () => {
         />
       </div>
       <button
-        className="w-full px-2 py-2 mt-4 bg-neutral-100 rounded-md font-bold text-neutral-500"
+        className="w-full px-2 py-2 mt-4 bg-neutral-100 dark:bg-neutral-800 rounded-md font-bold text-neutral-500 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-200"
         type="submit"
       >
         Submit{" "}
