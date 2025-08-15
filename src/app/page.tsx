@@ -17,8 +17,8 @@ export default function Home() {
         millions of lives
       </Paragraph>
       <Paragraph className="max-w-xl mt-4">
-        I&apos;m a senior software engineer with{" "}
-        <Highlight>7 years of experience</Highlight> building scalable web apps
+        I&apos;m pre final year student at{" "}
+        <Highlight>Chitkara University</Highlight> building scalable web apps
         that are performance optimized and good looking.
       </Paragraph>
       <Heading

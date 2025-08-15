@@ -18,11 +18,27 @@ const defaultFormState = {
 export const Contact = () => {
   const [formData, setFormData] = useState(defaultFormState);
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // Write your submit logic here
-    console.log(formData);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: formData.name.value,
+      email: formData.email.value,
+      message: formData.message.value,
+    }),
+  });
+
+  if (res.ok) {
+    alert("Message sent successfully!");
+    setFormData(defaultFormState);
+  } else {
+    alert("Something went wrong. Please try again.");
+  }
+};
+
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="flex flex-col md:flex-row justify-between gap-5">
