@@ -1,44 +1,57 @@
+import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT || 465),
-  secure: true, // Gmail uses SSL for 465
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
-
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { name, email, message } = await req.json();
 
     if (!name || !email || !message) {
-      return new Response(JSON.stringify({ error: "Missing fields" }), { status: 400 });
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
     }
 
-    // Mail to you
+    // Create SMTP transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: true, // port 465 needs secure: true
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
+    // Send email
     await transporter.sendMail({
       from: process.env.CONTACT_FROM,
       to: process.env.CONTACT_TO,
-      subject: `New Contact Form Submission - ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p>${message.replace(/\n/g, "<br>")}</p>`,
+      subject: `New message from ${name}`,
+      text: `
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}
+      `,
+      html: `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, "<br>")}</p>
+      `,
     });
 
-    // Mail to client
-    await transporter.sendMail({
-      from: process.env.CONTACT_FROM,
-      to: email,
-      subject: "Thanks for contacting me",
-      text: `Hi ${name},\n\nThanks for your message! I'll get back to you soon.\n\n– Parth`,
-      html: `<p>Hi ${name},</p><p>Thanks for your message! I'll get back to you soon.</p><p>– Parth</p>`,
-    });
-
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
-  } catch (err) {
-    console.error("Contact API Error:", err);
-    return new Response(JSON.stringify({ error: "Server error" }), { status: 500 });
+    return NextResponse.json(
+      { message: "Message sent successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Email sending failed:", error);
+    return NextResponse.json(
+      { error: "Failed to send message" },
+      { status: 500 }
+    );
   }
 }
