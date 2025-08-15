@@ -1,56 +1,53 @@
-import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-export async function POST(req: NextRequest) {
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT || 465),
+  secure: true,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
+
+export async function POST(req: Request) {
   try {
     const { name, email, message } = await req.json();
 
     if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "All fields are required" },
+      return new Response(
+        JSON.stringify({ error: "Missing fields" }),
         { status: 400 }
       );
     }
 
-    // Create SMTP transporter
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: true, // port 465 needs secure: true
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
-
-    // Send email
+    // 1️⃣ Send mail to you
     await transporter.sendMail({
       from: process.env.CONTACT_FROM,
       to: process.env.CONTACT_TO,
-      subject: `New message from ${name}`,
-      text: `
-Name: ${name}
-Email: ${email}
-
-Message:
-${message}
-      `,
-      html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
-      `,
+      subject: `New Contact Form Submission - ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      html: `<p><b>Name:</b> ${name}</p>
+             <p><b>Email:</b> ${email}</p>
+             <p>${message.replace(/\n/g, "<br>")}</p>`,
     });
 
-    return NextResponse.json(
-      { message: "Message sent successfully" },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Email sending failed:", error);
-    return NextResponse.json(
-      { error: "Failed to send message" },
+    // 2️⃣ Send acknowledgment to client
+    await transporter.sendMail({
+      from: process.env.CONTACT_FROM,
+      to: email,
+      subject: "Thanks for contacting me",
+      text: `Hi ${name},\n\nThanks for your message! I'll get back to you soon.\n\n– Parth`,
+      html: `<p>Hi ${name},</p>
+             <p>Thanks for your message! I'll get back to you soon.</p>
+             <p>– Parth</p>`,
+    });
+
+    return new Response(JSON.stringify({ ok: true }), { status: 200 });
+  } catch (err) {
+    console.error("Contact API Error:", err);
+    return new Response(
+      JSON.stringify({ error: "Server error" }),
       { status: 500 }
     );
   }
