@@ -31,9 +31,9 @@ export async function POST(req: Request) {
     await transporter.sendMail({
       from: process.env.CONTACT_FROM,
       to: email,
-      subject: "Thanks for contacting us",
-      text: `Hi ${name},\n\nThanks for your message! We'll get back to you soon.\n\n– Parth`,
-      html: `<p>Hi ${name},</p><p>Thanks for your message! We'll get back to you soon.</p><p>– Parth</p>`,
+      subject: "Thanks for contacting me",
+      text: `Hi ${name},\n\nThanks for your message! I'll get back to you soon.\n\n– Parth`,
+      html: `<p>Hi ${name},</p><p>Thanks for your message! I'll get back to you soon.</p><p>– Parth</p>`,
     });
 
     return new Response(JSON.stringify({ ok: true }), { status: 200 });
